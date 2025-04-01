@@ -7,24 +7,23 @@ import '../../../../domain.models/filter_criteria.dart';
 import '../../../services/filterable.dart';
 import '../../../../domain.models/sort_criteria.dart';
 
-class MainContent<T> extends ConsumerStatefulWidget {
+class FilterSortContent<T> extends ConsumerStatefulWidget {
   final Map<Type, List<String>> comparators;
 
-  const MainContent({
+  const FilterSortContent({
     super.key,
     required this.comparators,
   });
 
   @override
-  ConsumerState<MainContent<T>> createState() => MainContentState<T>();
+  ConsumerState<FilterSortContent<T>> createState() => FilterSortContentState<T>();
 }
 
-class MainContentState<T> extends ConsumerState<MainContent<T>> {
+class FilterSortContentState<T> extends ConsumerState<FilterSortContent<T>> {
   final List<FilterCriteria> filters = [];
   final List<SortCriteria> sorts = [];
 
   List<FilterCriteria> get currentFilters => filters;
-
   List<SortCriteria> get currentSorts => sorts;
 
   @override

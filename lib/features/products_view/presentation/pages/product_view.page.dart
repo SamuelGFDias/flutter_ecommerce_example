@@ -33,7 +33,10 @@ class _DataPageState extends ConsumerState<ProductViewPage> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        title: const Text("Produtos"),
+        title: const Text(
+          "Produtos",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [

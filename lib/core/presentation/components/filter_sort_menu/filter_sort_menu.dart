@@ -3,11 +3,11 @@ import 'package:flutter_ecommerce_example/core/providers/filter_criteria/filter_
 
 import '../modal_footer.dart';
 import '../modal_header.dart';
-import 'main_content.dart';
+import 'filter_sort_content.dart';
 
 class FilterSortMenu<T> extends StatelessWidget {
   final void Function(FilterState) onUpdate;
-  final GlobalKey<MainContentState<T>> _mainContentKey = GlobalKey();
+  final GlobalKey<FilterSortContentState<T>> _mainContentKey = GlobalKey();
 
   FilterSortMenu({
     super.key,
@@ -34,34 +34,36 @@ class FilterSortMenu<T> extends StatelessWidget {
         context: context,
         isScrollControlled: true,
         isDismissible: false,
-        builder: (context) =>
-            LayoutBuilder(
-              builder: (context, constraints) =>
-                  SizedBox(
-                    height: constraints.maxHeight * 0.6,
-                    child: Column(
-                      children: [
-                        ModalHeader(
-                            title: "Filtro Avançado",
-                            colors: [Colors.black45, Colors.black87]),
-                        Expanded(
-                          child: MainContent<T>(
-                            key: _mainContentKey,
-                            comparators: comparators,
-                          ),
-                        ),
-                        ModalFooter(
-                            onCancel: () => Navigator.of(context).pop(),
-                            onConfirm: () {
-                              final filters = _mainContentKey.currentState?.currentFilters ?? [];
-                              final sorts = _mainContentKey.currentState?.currentSorts ?? [];
-
-                              onUpdate(FilterState(filters: filters, sorts: sorts));
-                              Navigator.pop(context);
-                            })
-                      ],
+        builder: (context) => LayoutBuilder(
+              builder: (context, constraints) => SizedBox(
+                height: constraints.maxHeight * 0.6,
+                child: Column(
+                  children: [
+                    ModalHeader(
+                        title: "Filtro Avançado",
+                        colors: [Colors.black45, Colors.black87]),
+                    SizedBox(height: 10),
+                    Expanded(
+                      child: FilterSortContent<T>(
+                        key: _mainContentKey,
+                        comparators: comparators,
+                      ),
                     ),
-                  ),
+                    ModalFooter(
+                        onCancel: () => Navigator.of(context).pop(),
+                        onConfirm: () {
+                          final filters =
+                              _mainContentKey.currentState?.currentFilters ??
+                                  [];
+                          final sorts =
+                              _mainContentKey.currentState?.currentSorts ?? [];
+
+                          onUpdate(FilterState(filters: filters, sorts: sorts));
+                          Navigator.pop(context);
+                        })
+                  ],
+                ),
+              ),
             ));
   }
 }
